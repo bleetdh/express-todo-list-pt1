@@ -1,5 +1,5 @@
 <a href="/"> Home </a>
-<h2> Creating To Do List </h2>
+<h2> Creating New To Do</h2>
 
 <form action="/todo" method="post">
   <label for="name">Name: </label>
@@ -9,23 +9,27 @@
   <input id="description" type="text" name="description">
 
   <label for="completed">Completed: </label>{{!-- <input id="completed" type="text" name="completed"> --}}
-  {{> completed}}
+  {{> yesorno }}
     <button type="submit">Create</button>
 </form>
 
-<h2> All your To Do </h2>
+<h2> All your To Do-esssss </h2>
+
 <ul>
-  {{#each todos as |todo|}}
-    <li>
-      name: {{ todo.name }}</br>
-      description: {{ todo.description }}</br>
-      completed: {{ todo.completed }} </br>
-      {{!-- i check if todo is completed --}}
-      {{#unless todo.completed}}
-      {{!-- if todo.completed is false --}}
-        have you completed? {{> completed}}
-      {{/unless}}
-      <hr>
-    </li>
+  {{#each allTodos as |todo|}}
+    {{#unless todo.completed}}
+      <li>
+        name: {{ todo.name }}</br>
+        description: {{ todo.description }}</br>
+        completed: {{ todo.completed }} </br>
+        {{!-- i check if todo is completed --}}
+        {{!-- if todo.completed is false --}}
+        {{!-- have you completed? {{> yesorno}} --}}
+        <form action="/todo/{{ todo.id }}" method="post">
+          <button>Done</button>
+        </form>
+        <hr>
+      </li>
+    {{/unless}}
   {{/each}}
 </ul>
