@@ -2,28 +2,30 @@
 <h2> Creating To Do List </h2>
 
 <form action="/todo" method="post">
-  <label for="name">Name</label>
-  <input id='name'type="text" name="name">
+  <label for="name">Name: </label>
+  <input id='name' type="text" name="name">
 
-  <label for="description">Description</label>
+  <label for="description">Description: </label>
   <input id="description" type="text" name="description">
 
-  <label for="completed">Completed</label>
-  {{!-- <input id="completed" type="text" name="completed"> --}}
-  <select name="completed">
-    <option value="true">true</option>
-    <option value="false">false</option>
-  </select>
-  <button type="submit">Create</button>
+  <label for="completed">Completed: </label>{{!-- <input id="completed" type="text" name="completed"> --}}
+  {{> completed}}
+    <button type="submit">Create</button>
 </form>
 
 <h2> All your To Do </h2>
 <ul>
   {{#each todos as |todo|}}
-  <li>
-    {{ todo.name }}</br>
-    description: {{ todo.description }}</br>
-    completed: {{ todo.completed}}</br>
-  </li>
+    <li>
+      name: {{ todo.name }}</br>
+      description: {{ todo.description }}</br>
+      completed: {{ todo.completed }} </br>
+      {{!-- i check if todo is completed --}}
+      {{#unless todo.completed}}
+      {{!-- if todo.completed is false --}}
+        have you completed? {{> completed}}
+      {{/unless}}
+      <hr>
+    </li>
   {{/each}}
 </ul>

@@ -16,16 +16,20 @@ mongoose.connect(url, {
 })
 mongoose.Promise = global.Promise
 
+// middleware
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({
   extended: true
 }))
 
+// engine
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
+  partialsDir: 'views/partials'
 }))
 app.set('view engine', 'handlebars')
 
+// get
 app.get('/', function (req, res) {
   res.render('home')
 })
@@ -39,13 +43,13 @@ app.get('/todo', function (req, res) {
   })
 })
 
+// post
 app.post('/todo', function (req, res) {
   var newTodo = new Todo({
     name: req.body.name,
     description: req.body.description,
     completed: req.body.completed
   })
-
   newTodo.save(function (err, newTodo) {
     if (err) throw err
 
@@ -53,6 +57,7 @@ app.post('/todo', function (req, res) {
   })
 })
 
+// listen
 const port = 4000
 app.listen(port, function () {
   console.log('running ExpressMongoTodo at ' + port)
